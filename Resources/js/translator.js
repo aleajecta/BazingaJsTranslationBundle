@@ -99,6 +99,8 @@ var Translator = (function(document, undefined) {
             return _messages[localeFallback][_domain][id];
         }
 
+
+        console.log('Missing translation in all locales/domain defined for key:"'+id+'"');
         return id;
     }
 
