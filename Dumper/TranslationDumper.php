@@ -3,6 +3,8 @@
 namespace Bazinga\Bundle\JsTranslationBundle\Dumper;
 
 use Bazinga\Bundle\JsTranslationBundle\Finder\TranslationFinder;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -10,8 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * @author Adrien Russo <adrien.russo.qc@gmail.com>
  */
-class TranslationDumper
-{
+class TranslationDumper {
     /**
      * @var EngineInterface
      */
@@ -86,6 +87,17 @@ class TranslationDumper
     }
 
     /**
+     * @param array $activeLocales
+     */
+    public function setLocaleFallback($localFallback)
+    {
+        $this->localeFallback = $localFallback;
+
+        return $this;
+    }
+
+
+    /**
      * Get array of active locales
      */
     public function getActiveLocales()
@@ -151,6 +163,7 @@ class TranslationDumper
             if (file_exists($file)) {
                 $this->filesystem->remove($file);
             }
+
 
             file_put_contents(
                 $file,

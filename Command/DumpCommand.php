@@ -60,9 +60,11 @@ class DumpCommand extends ContainerAwareCommand
             $this->targetPath
         ));
 
-        $this
-            ->getContainer()
-            ->get('bazinga.jstranslation.translation_dumper')
-            ->dump($this->targetPath);
+
+        $dumper = $this
+                ->getContainer()
+                ->get('bazinga.jstranslation.translation_dumper');
+        $dumper->setLocaleFallback($this->getContainer()->get('translator')->getLocale())
+                ->dump($this->targetPath);
     }
 }
